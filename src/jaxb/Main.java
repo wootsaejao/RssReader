@@ -1,11 +1,12 @@
 package jaxb;
 
-import java.io.File;
+//import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -13,17 +14,16 @@ import javax.xml.bind.Unmarshaller;
 public class Main {
 	
 	public static void main (String [] args) throws MalformedURLException {
-		
-		String rssUrl;
+				
+		String rssUrl = JOptionPane.showInputDialog("Get RSS feed from: (url.xml)");
 //		rssUrl = "http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml";
-//		rssUrl = "http://se.cpe.ku.ac.th/219451/data/bbc-elements-podcast.xml";
-		rssUrl = "http://se.cpe.ku.ac.th/219451/data/bbc-elements.xml";
+//		rssUrl = "http://se.cpe.ku.ac.th/219451/data/bbc-elements.xml";
 		Rss rss = unmarshal(rssUrl);
 		List<Item> items = rss.getItems();
 		
 		// Generate string format
 		String s = "\n\n";
-		s = "\n--------------------------------\n        | " +
+		s = "\n\n--------------------------------\n        | " +
 				rss.getTitle() + 
 				" |\n--------------------------------\n\n";
 		for (Item item : items) {
@@ -41,6 +41,7 @@ public class Main {
 		Gui gui = new Gui("Pion RSS Reader - 0.1a");
 		gui.init(s);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		gui.setSize(510, 710);
 		gui.setSize(400, 600);
 		gui.setVisible(true);
 		
@@ -55,8 +56,6 @@ public class Main {
 			Object o = u.unmarshal( url );
 			Rss rss = (Rss) o;
 			return rss;
-			
-			
 		}
 		catch (JAXBException e) {
 			e.printStackTrace();
@@ -64,7 +63,5 @@ public class Main {
 		return null;
 	}
 	
-	
-
 	
 }
